@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Photo Upload</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app" v-cloak>
+    <!-- nav -->
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    Photo Upload
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+
+                <!-- form -->
+                <form class="form-horizontal">
+
+                    <div class="form-group form-group--left">
+                        <label for="firstname" class="col-sm-2 control-label">Firstname</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="firstname" placeholder="Firstname" v-model="firstname">
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group--left">
+                        <label for="lastname" class="col-sm-2 control-label">Lastname</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="lastname" placeholder="Lastname" v-model="lastname">
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="form-group form-group--left">
+                        <label for="file" class="col-sm-2 control-label">Photo</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" id="file" placeholder="Lastname">
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group--left">
+                        <vue-clip :options="options">
+                            <template slot="clip-uploader-action">
+                                <div>
+                                    <div class="dz-message"><h2> Click or Drag and Drop files here upload </h2></div>
+                                </div>
+                            </template>
+
+                            <template slot="clip-uploader-body" scope="props">
+                                <div v-for="file in props.files">
+                                    <img v-bind:src="file.dataUrl" />
+                                    {{ file.name }} {{ file.status }}
+                                </div>
+                            </template>
+
+                        </vue-clip>
+                    </div>
+
+                    <hr>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary" @click.prevent="onClickSubmit">Abschicken</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-6">
+                <div class="preview">
+                    <img src="http://via.placeholder.com/450x250" alt="wuff" class="img-thumbnail">
+                    <div class="preview--firstname">{{ firstname }}</div>
+                    <div class="preview--lastname">{{ lastname }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="vue-clip.min.js"></script>
+<script src="scripts.vue.js"></script>
+</body>
+</html>
