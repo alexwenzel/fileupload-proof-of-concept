@@ -44,49 +44,47 @@
                     <div class="form-group form-group--left">
                         <label for="firstname" class="col-sm-2 control-label">Firstname</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="firstname" placeholder="Firstname" v-model="firstname">
+                            <input type="text" class="form-control" id="firstname" placeholder="Firstname"
+                                   v-model="firstname">
                         </div>
                     </div>
 
                     <div class="form-group form-group--left">
                         <label for="lastname" class="col-sm-2 control-label">Lastname</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="lastname" placeholder="Lastname" v-model="lastname">
+                            <input type="text" class="form-control" id="lastname" placeholder="Lastname"
+                                   v-model="lastname">
                         </div>
                     </div>
 
                     <hr>
 
                     <div class="form-group form-group--left">
-                        <label for="file" class="col-sm-2 control-label">Photo</label>
+                        <label for="" class="col-sm-2 control-label">Photo</label>
                         <div class="col-sm-10">
-                            <input type="file" class="form-control" id="file" placeholder="Lastname">
+                            <vue-clip :options="options" :on-complete="onFileUploadComplete">
+                                <template slot="clip-uploader-action">
+                                    <div>
+                                        <div class="dz-message"><b>Click or Drag and Drop files here upload </b></div>
+                                    </div>
+                                </template>
+
+                                <template slot="clip-uploader-body" scope="props">
+                                    <div v-for="file in props.files">
+                                        {{ file.name }}
+                                    </div>
+                                </template>
+
+                            </vue-clip>
                         </div>
-                    </div>
-
-                    <div class="form-group form-group--left">
-                        <vue-clip :options="options">
-                            <template slot="clip-uploader-action">
-                                <div>
-                                    <div class="dz-message"><h2> Click or Drag and Drop files here upload </h2></div>
-                                </div>
-                            </template>
-
-                            <template slot="clip-uploader-body" scope="props">
-                                <div v-for="file in props.files">
-                                    <img v-bind:src="file.dataUrl" />
-                                    {{ file.name }} {{ file.status }}
-                                </div>
-                            </template>
-
-                        </vue-clip>
                     </div>
 
                     <hr>
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary" @click.prevent="onClickSubmit">Abschicken</button>
+                            <button type="submit" class="btn btn-primary" @click.prevent="onClickSubmit">Abschicken
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -96,6 +94,9 @@
                     <img src="http://via.placeholder.com/450x250" alt="wuff" class="img-thumbnail">
                     <div class="preview--firstname">{{ firstname }}</div>
                     <div class="preview--lastname">{{ lastname }}</div>
+                    <div class="preview--image" v-if="uploadedImage">
+                        <img :src="uploadedImage" class="img-responsive">
+                    </div>
                 </div>
             </div>
         </div>

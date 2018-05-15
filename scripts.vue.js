@@ -5,9 +5,10 @@ var app = new Vue({
     data: {
         firstname: '',
         lastname: '',
+        uploadedImage: null,
         options: {
-            url: '/upload',
-            paramName: 'file'
+            url: '/app.php/uploadfile',
+            paramName: 'image'
         }
     },
     methods: {
@@ -26,6 +27,12 @@ var app = new Vue({
                     }
                 });
             }
+        },
+        onFileUploadComplete: function (file, status, xhr) {
+            console.log(file, status, xhr);
+
+            var data = JSON.parse(xhr.response);
+            this.uploadedImage = data.image_path;
         }
     }
 });
